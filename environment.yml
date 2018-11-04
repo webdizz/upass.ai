@@ -1,0 +1,33 @@
+name: upass
+channels:
+    - https://conda.anaconda.org/menpo
+    - conda-forge
+    - pytorch
+      #- damianavila82
+      #- dhirschfeld
+      #- rogerramos
+      #- creditx
+    - anaconda
+    - fastai
+dependencies:
+    - python>3.6
+    - numpy
+    - matplotlib
+    - seaborn
+    - pandas
+    # DL related
+    - pytorch-nightly
+    - torchvision
+    - mkl
+    - scikit-learn
+    - fastai
+     # for Jupyter
+    - jupyter
+    - rise
+    - jupyter_contrib_nbextensions #=0.3.3
+    # for VS code
+    - pylint
+    - autopep8
+    - pip
+    - pip:
+        - torchtext

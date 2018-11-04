@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  conda:
+    image: webdizz/ml-backlog-priority
+    container_name: conda
+    ports:
+     - 8888:8888
+    volumes:
+     - ./:/opt/notebooks
+     - ~/.jupyter:/home/appuser/.jupyter
+    environment:
+      - VIRTUAL_HOST=upass.dev.ai
+      - VIRTUAL_PORT=8888
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
