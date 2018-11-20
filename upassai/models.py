@@ -9,8 +9,9 @@ __all__ = ['SiameseNetwork', 'contrastive_loss']
 class SiameseNetwork(nn.Module):
 
     def __init__(self):
-        super(SiameseNetwork, self).__init__()
-        self.cnn1 = create_body(torchvision.models.densenet121(True))
+        super().__init__()
+        # self.cnn1 = create_body(torchvision.models.densenet121(True))
+        self.cnn1 = create_body(models.resnet50(pretrained=True))
         self.fc1 = nn.Sequential(
             nn.Linear(1000, 500),
             nn.ReLU(inplace=True),
