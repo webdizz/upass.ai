@@ -1,11 +1,15 @@
+from torchvision.transforms import *
+import PIL
 import os
 import pandas as pd
+from fastai.vision import *
+from fastai import *
 
 
-__all__ = ['compile_faces_dataset']
+__all__ = ['compile_faces_dataset', 'create_bunch']
 
 
-def select_and_count_only_images(path):
+def _select_and_count_only_images(path):
     identity_images = [f for f in os.listdir(path) if '.jpg' in f]
     return identity_images, len(identity_images)
 
@@ -25,8 +29,8 @@ def compile_faces_dataset(path, pairs=10, folder='valid', qty=500):
     for i in range(0, faces_num):
         # cache images for later speedup
         if face_identities[i] not in image_registry:
-            src_id_imgs, src_id_imgs_num = select_and_count_only_images(path+'/%s/%s' %
-                                                                        (folder, face_identities[i]))
+            src_id_imgs, src_id_imgs_num = _select_and_count_only_images(path+'/%s/%s' %
+                                                                         (folder, face_identities[i]))
 
             image_registry[face_identities[i]] = src_id_imgs, src_id_imgs_num
         else:
@@ -47,8 +51,8 @@ def compile_faces_dataset(path, pairs=10, folder='valid', qty=500):
 
             # cache images for later speedup
             if face_identities[trg_id] not in image_registry:
-                trg_id_imgs, trg_id_imgs_num = select_and_count_only_images(path+'/%s/%s' %
-                                                                            (folder, face_identities[trg_id]))
+                trg_id_imgs, trg_id_imgs_num = _select_and_count_only_images(path+'/%s/%s' %
+                                                                             (folder, face_identities[trg_id]))
 
                 image_registry[face_identities[trg_id]
                                ] = trg_id_imgs, trg_id_imgs_num
@@ -62,3 +66,33 @@ def compile_faces_dataset(path, pairs=10, folder='valid', qty=500):
             counter = counter+1
 
     return df
+
+
+def create_bunch(df, cols, path: PathOrStr = '.', tfms=None, bs=1):
+    return (CustomImageItemList.from_df(df, path=path, cols=cols)
+            .split_by_valid_func(lambda row: 'valid' in row)
+            .label_from_df(cols='similarity')
+            .databunch(bs=bs, tfms=tfms)
+            )
+
+
+class CustomImageItemList(ImageItemList):
+
+    def _resizeable_create_func(self, fn: PathOrStr):
+        normalize = Normalize(mean=[0.485, 0.456, 0.406],
+                              std=[0.229, 0.224, 0.225])
+
+        transform = Compose([
+            RandomGrayscale(),
+            Resize(224),
+            ToTensor(),
+            normalize,
+        ])
+
+        x = PIL.Image.open(fn).convert('RGB')
+        x = transform(x)
+        x = Image(x).resize(224)
+
+        return x
+
+    def open(self, fn): return self._resizeable_create_func(fn)
