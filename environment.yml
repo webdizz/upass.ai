@@ -3,10 +3,6 @@ channels:
     - https://conda.anaconda.org/menpo
     - conda-forge
     - pytorch
-      #- damianavila82
-      #- dhirschfeld
-      #- rogerramos
-      #- creditx
     - anaconda
     - fastai
 dependencies:
@@ -24,7 +20,7 @@ dependencies:
      # for Jupyter
     - jupyter
     - rise
-    - jupyter_contrib_nbextensions #=0.3.3
+    - jupyter_contrib_nbextensions 
     # for VS code
     - pylint
     - autopep8
