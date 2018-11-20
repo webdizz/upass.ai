@@ -2,16 +2,17 @@ version: '3'
 
 services:
   conda:
-    image: webdizz/ml-backlog-priority
-    container_name: conda
+    image: webdizz/upass.ai
     ports:
      - 8888:8888
     volumes:
      - ./:/opt/notebooks
      - ~/.jupyter:/home/appuser/.jupyter
+     - ../data:/opt/data
     environment:
       - VIRTUAL_HOST=upass.dev.ai
       - VIRTUAL_PORT=8888
+      - CONDA_ENV=upass
 
 networks:
   default:
