@@ -6,7 +6,7 @@ from fastai.vision import *
 from fastai import *
 
 
-__all__ = ['compile_faces_dataset', 'create_bunch']
+__all__ = ['compile_faces_dataset', 'create_bunch', 'TwinDataset']
 
 
 def _select_and_count_only_images(path):
@@ -96,3 +96,20 @@ class CustomImageItemList(ImageItemList):
         return x
 
     def open(self, fn): return self._resizeable_create_func(fn)
+
+
+class TwinDataset(Dataset):
+
+    def __init__(self, source: Dataset, target: Dataset):
+        self.source = source
+        self.target = target
+        self.c = source.c
+
+    def __getitem__(self, idx):
+        src = self.source[idx]
+        trg = self.target[idx]
+
+        return [src[0], trg[0]], src[1]
+
+    def __len__(self):
+        return len(self.source)
