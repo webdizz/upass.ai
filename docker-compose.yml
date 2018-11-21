@@ -5,10 +5,11 @@ services:
     image: webdizz/upass.ai
     ports:
      - 8888:8888
+    shm_size: 2G
     volumes:
-     - ./:/opt/notebooks
-     - ~/.jupyter:/home/appuser/.jupyter
-     - ../data:/opt/data
+      - ./:/opt/notebooks
+      - ~/.jupyter:/home/appuser/.jupyter
+      - ../data:/opt/data
     environment:
       - VIRTUAL_HOST=upass.dev.ai
       - VIRTUAL_PORT=8888
