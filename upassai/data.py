@@ -37,7 +37,7 @@ def compile_faces_dataset(path, pairs=10, folder='valid', qty=500):
             src_id_imgs, src_id_imgs_num = image_registry[face_identities[i]]
 
         for ii in range(0, pairs):
-            if counter >= qty:
+            if qty > 0 and counter >= qty:
                 return df
 
             base_path = '%s/%s' % (folder, face_identities[i])
