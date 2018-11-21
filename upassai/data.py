@@ -43,7 +43,7 @@ def compile_faces_dataset(path, pairs=10, folder='valid', qty=500):
             base_path = '%s/%s' % (folder, face_identities[i])
             source = '%s/%s' % (base_path, src_id_imgs[ii])
             target = '%s/%s' % (base_path, src_id_imgs[src_id_imgs_num-ii-1])
-            df.loc[counter] = [source, target, 0]
+            df.loc[counter] = [source, target, 'genuine']
             counter = counter+1
 
             # get another identities
@@ -62,7 +62,7 @@ def compile_faces_dataset(path, pairs=10, folder='valid', qty=500):
             target_img = choice(trg_id_imgs)
             trg_base_path = '%s/%s' % (folder, face_identities[trg_id])
             target = '%s/%s' % (trg_base_path, target_img)
-            df.loc[counter] = [source, target, 1]
+            df.loc[counter] = [source, target, 'imposter']
             counter = counter+1
 
     return df
