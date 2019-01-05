@@ -12,8 +12,9 @@ dependencies:
     - seaborn
     - pandas
     # DL related
-    - pytorch-nightly
-    - torchvision-nightly
+    - pytorch
+    - torchvision
+    - libjpeg-turbo
     - mkl
     - scikit-learn
     - fastai
