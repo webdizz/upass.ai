@@ -8,7 +8,13 @@ __all__ = ['SiameseNetwork', 'contrastive_loss']
 
 class SiameseNetwork(nn.Module):
 
-    def __init__(self, architecture: nn.Module = models.resnet50, pretrained: bool = True, cut: int = None, nf: int = 1000, nc: int = 100, lin_ftrs: Optional[Collection[int]] = None, ps: Floats = 0.5):
+    def __init__(self, architecture: nn.Module = models.resnet50,
+                 pretrained: bool = True,
+                 cut: int = None,
+                 nf: int = 1000,
+                 nc: int = 100,
+                 lin_ftrs: Optional[Collection[int]] = None,
+                 ps: Floats = 0.5):
         super().__init__()
         self.body = create_body(architecture(pretrained=pretrained), cut=cut)
         self.head = create_head(nf, nc, lin_ftrs, ps)
