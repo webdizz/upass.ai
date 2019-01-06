@@ -16,7 +16,7 @@ class SiameseNetwork(nn.Module):
                  lin_ftrs: Optional[Collection[int]] = None,
                  ps: Floats = 0.5):
         super().__init__()
-        self.body = create_body(architecture(pretrained=pretrained), cut=cut)
+        self.body = create_body(architecture, pretrained=pretrained, cut=cut)
         self.head = create_head(nf, nc, lin_ftrs, ps)
 
     def forward_once(self, x):

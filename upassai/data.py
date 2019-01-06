@@ -70,8 +70,9 @@ def compile_faces_dataset(path, pairs=10, folder='valid', qty=500):
 
 def create_bunch(df, cols, path: PathOrStr = '.', tfms=None, bs=1):
     return (CustomImageItemList.from_df(df, path=path, cols=cols)
-            .split_by_valid_func(lambda row: 'valid' in row)
+            .no_split()
             .label_from_df(cols='similarity')
+            # .transform(get_transforms(), tfm_y=True)
             .databunch(bs=bs, tfms=tfms)
             )
 
