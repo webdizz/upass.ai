@@ -12,7 +12,7 @@ class SiameseNetwork(nn.Module):
                  pretrained: bool = True,
                  cut: int = None,
                  nf: int = 1000,
-                 nc: int = 100,
+                 nc: int = 2,
                  lin_ftrs: Optional[Collection[int]] = None,
                  ps: Floats = 0.5):
         super().__init__()
