@@ -28,3 +28,6 @@ dependencies:
     - pip
     - pip:
         - torchtext
+        # RPI
+        - luma.lcd
+        # - picamera
