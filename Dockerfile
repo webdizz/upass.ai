@@ -1,4 +1,5 @@
-FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04 as base
+#FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04 as base
+FROM nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04 as base
 
 ENV LANGUAGE en_US.UTF-8
 ENV LANG en_US.UTF-8
@@ -21,6 +22,7 @@ RUN apt-get update \
 	 			libgomp1 \
 	 			vim \
 	 			sudo \
+				gcc \
 	&& wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh \
 	&& /bin/bash ~/miniconda.sh -b -p /opt/conda \
 	&& rm ~/miniconda.sh \
@@ -34,7 +36,7 @@ RUN apt-get update \
 FROM conda as condaenv
 RUN . /etc/profile.d/conda.sh \
 	&& conda env create -f /environment.yml  \
-	&& conda install --name $CONDA_ENV cuda100 -c pytorch \
+	#&& conda install --name $CONDA_ENV cuda100 -c pytorch \
 	&& conda clean --all -y \
 	&& rm -rf ~/.cache/pip \
 	&& conda activate $CONDA_ENV
