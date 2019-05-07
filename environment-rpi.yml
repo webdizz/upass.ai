@@ -12,6 +12,8 @@ dependencies:
     - seaborn
     - pandas
     # DL related
+    - pytorch
+    - torchvision
     - libjpeg-turbo
     - mkl
     - scikit-learn
@@ -24,3 +26,8 @@ dependencies:
     - pylint
     - autopep8
     - pip
+    - pip:
+        - torchtext
+        # RPI
+        - luma.lcd
+        # - picamera
