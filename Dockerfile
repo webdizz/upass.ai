@@ -1,4 +1,3 @@
-#FROM nvidia/cuda:10.0-cudnn7-runtime-ubuntu18.04 as base
 FROM nvidia/cuda:10.1-cudnn7-runtime-ubuntu18.04 as base
 
 ENV LANGUAGE en_US.UTF-8
